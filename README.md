@@ -1,10 +1,14 @@
-# Python Backend
+# AI Conversational With Python Backend
 
-This folder contains a parallel Python backend for the existing frontend and PostgreSQL schema. It is structured so the React app can talk to FastAPI without changing the frontend API client contract.
+This repository contains the React frontend together with the FastAPI-based Python backend and the shared PostgreSQL-oriented project structure.
 
 Detailed Python-specific documents are available under:
 
-- [docs/README.md](/e:/AI-Conversational/python_backend/docs/README.md)
+- `docs/`
+
+Frontend source is included under:
+
+- `frontend/`
 
 ## Architecture
 
@@ -44,7 +48,7 @@ The Python backend mirrors the routes used by the current frontend:
 
 ## Database
 
-This backend uses the same PostgreSQL schema defined in [Database.sql](/e:/AI-Conversational/backend/Database.sql).
+This backend uses the same PostgreSQL schema structure as the original project.
 
 ## Setup
 
@@ -102,6 +106,7 @@ alembic stamp 0001_baseline_existing_schema
 ```
 
 Migration notes are documented in [alembic/README.md](/e:/AI-Conversational/python_backend/alembic/README.md).
+Migration notes are documented in `alembic/README.md`.
 
 ## Frontend
 
@@ -110,6 +115,8 @@ Point the frontend to the Python backend with:
 ```env
 REACT_APP_API_URL=http://localhost:8000/api
 ```
+
+A safe frontend env example is included at `frontend/.env.example`.
 
 ## Notes
 
