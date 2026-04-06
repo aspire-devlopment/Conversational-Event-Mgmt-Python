@@ -127,3 +127,15 @@ cd python_backend
 docker build -t ai-conversational-python-backend .
 docker run --env-file .env -p 8000:8000 ai-conversational-python-backend
 ```
+
+## Render Deployment
+
+This repo now includes a ready-to-use [render.yaml](/e:/AI-Conversational/ai-conversational-python-backend-repo/render.yaml) for free Render deployment.
+
+Suggested Render flow:
+
+1. Create a new Web Service from this GitHub repo
+2. Let Render detect `render.yaml`
+3. Fill in the required secret environment variables
+4. Set your frontend URL in `FRONTEND_URL` and `FRONTEND_URLS`
+5. Deploy and verify `GET /health`

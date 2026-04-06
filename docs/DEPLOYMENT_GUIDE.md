@@ -47,6 +47,27 @@ docker run --env-file .env -p 8000:8000 ai-conversational-python-backend
 - disable reload in production
 - verify `TRUSTED_HOSTS`
 - verify CORS origins for the production frontend
+- this repo includes a ready-to-use `render.yaml`
+
+## Render Setup
+
+The repo includes:
+
+- [render.yaml](/e:/AI-Conversational/ai-conversational-python-backend-repo/render.yaml)
+
+Recommended secret values to fill on Render:
+
+- `FRONTEND_URL`
+- `FRONTEND_URLS`
+- `TRUSTED_HOSTS`
+- `JWT_SECRET`
+- `DB_HOST`
+- `DB_PORT`
+- `DB_USER`
+- `DB_PASSWORD`
+- `DB_NAME`
+- `LLM_API_KEY`
+- `GROQ_API_KEY`
 
 ## Post-Deploy Checks
 
