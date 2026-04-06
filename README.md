@@ -1,148 +1,38 @@
-# AI Conversational With Python Backend
+# Conversational Event Management Python
 
-This repository contains the React frontend together with the FastAPI-based Python backend and the shared PostgreSQL-oriented project structure.
+This repository is organized as a simple monorepo:
 
-Detailed Python-specific documents are available under:
-
-- `docs/`
-
-Frontend source is included under:
-
+- `backend-python/`
+  FastAPI backend, Alembic setup, backend docs, Dockerfile, and provider integrations.
 - `frontend/`
+  React frontend application.
 
-## Architecture
+## Local Development
 
-- `app/core`: configuration, database access, and security helpers
-- `app/domain`: chat draft normalization, validation, and shared constants
-- `app/application`: auth, events, LLM orchestration, and chat use-cases
-- `app/infrastructure`: PostgreSQL repositories
-- `app/presentation`: FastAPI routes and auth dependencies
-
-### Added Professionalization Pieces
-
-- Pydantic request and response view models under `app/presentation/schemas`
-- Request correlation-id and access logging middleware under `app/presentation/middleware`
-- Structured JSON logging helpers under `app/core/logging.py`
-- Shared application exceptions under `app/core/exceptions.py`
-- Alembic migration scaffolding under `python_backend/alembic`
-
-## API Surface
-
-The Python backend mirrors the routes used by the current frontend:
-
-- `POST /api/auth/login`
-- `POST /api/auth/register`
-- `POST /api/auth/logout`
-- `GET /api/auth/me`
-- `GET /api/admin/users`
-- `POST /api/admin/users/{id}/reset-password`
-- `GET /api/events`
-- `GET /api/events/{id}`
-- `POST /api/events`
-- `PUT /api/events/{id}`
-- `DELETE /api/events/{id}`
-- `POST /api/chat/session`
-- `GET /api/chat/session/{sessionId}`
-- `POST /api/chat/message`
-- `DELETE /api/chat/session/{sessionId}`
-
-## Database
-
-This backend uses the same PostgreSQL schema structure as the original project.
-
-## Setup
-
-1. Install dependencies:
+Backend:
 
 ```bash
-pip install -r python_backend/requirements.txt
-```
-
-2. Copy env vars:
-
-```bash
-copy python_backend\\.env.example python_backend\\.env
-```
-
-3. Update `python_backend/.env` with your PostgreSQL and LLM settings.
-
-4. Run the API:
-
-```bash
-cd python_backend
+cd backend-python
+pip install -r requirements.txt
+copy .env.example .env
 python run.py
 ```
 
-The default backend URL is `http://localhost:8000/api`.
-
-## Production Security
-
-The FastAPI app now includes:
-
-- JWT auth context built in middleware
-- request correlation-id middleware
-- structured JSON request/error logging
-- security headers middleware
-- trusted host enforcement
-- optional HTTPS redirect via `FORCE_HTTPS=true`
-
-Recommended production environment values:
-
-```env
-APP_ENV=production
-FORCE_HTTPS=true
-TRUSTED_HOSTS=your-domain.com,www.your-domain.com
-```
-
-If you deploy behind a reverse proxy or load balancer, terminate TLS there and forward only HTTPS traffic to the app.
-
-## Migrations
-
-Because this project already has an existing PostgreSQL schema, start Alembic by stamping the baseline revision:
+Frontend:
 
 ```bash
-cd python_backend
-alembic stamp 0001_baseline_existing_schema
+cd frontend
+npm install
+copy .env.example .env.local
+npm start
 ```
 
-Migration notes are documented in [alembic/README.md](/e:/AI-Conversational/python_backend/alembic/README.md).
-Migration notes are documented in `alembic/README.md`.
+## Deployment
 
-## Frontend
+- Render can deploy the backend using the root [render.yaml](/e:/AI-Conversational/ai-conversational-python-backend-repo/render.yaml)
+- Vercel can deploy the frontend from the `frontend/` directory
 
-Point the frontend to the Python backend with:
+## More Docs
 
-```env
-REACT_APP_API_URL=http://localhost:8000/api
-```
-
-A safe frontend env example is included at `frontend/.env.example`.
-
-## Notes
-
-- The chat layer preserves the current frontend response shapes.
-- Pasted JSON event data is handled directly and fills the event draft without relying only on the model.
-- OpenRouter is the easiest drop-in provider, but Gemini is also supported.
-- FastAPI is the better fit than DRF here because this project is API-first, React-driven, and LLM/chat heavy rather than Django-admin centric.
-
-## Docker
-
-Build and run the Python backend container:
-
-```bash
-cd python_backend
-docker build -t ai-conversational-python-backend .
-docker run --env-file .env -p 8000:8000 ai-conversational-python-backend
-```
-
-## Render Deployment
-
-This repo now includes a ready-to-use [render.yaml](/e:/AI-Conversational/ai-conversational-python-backend-repo/render.yaml) for free Render deployment.
-
-Suggested Render flow:
-
-1. Create a new Web Service from this GitHub repo
-2. Let Render detect `render.yaml`
-3. Fill in the required secret environment variables
-4. Set your frontend URL in `FRONTEND_URL` and `FRONTEND_URLS`
-5. Deploy and verify `GET /health`
+- [Backend Docs](/e:/AI-Conversational/ai-conversational-python-backend-repo/backend-python/docs/README.md)
+- [Backend Deployment Guide](/e:/AI-Conversational/ai-conversational-python-backend-repo/backend-python/docs/DEPLOYMENT_GUIDE.md)
